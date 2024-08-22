@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Pattern Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        select, input {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #patternCanvas {
+            border: 1px solid #ccc;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Procedural Pattern Generator</h1>
+        <div class="controls">
+            <div class="control-group">
+                <label for="patternType">Pattern Type:</label>
+                <select id="patternType">
+                    <option value="dots">Dots</option>
+                    <option value="lines">Lines</option>
+                    <option value="circles">Circles</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="colorScheme">Color Scheme:</label>
+                <select id="colorScheme">
+                    <option value="random">Random</option>
+                    <option value="monochrome">Monochrome</option>
+                    <option value="complementary">Complementary</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="density">Density:</label>
+                <input type="range" id="density" min="1" max="100" value="50">
+            </div>
+            <button id="generateBtn">Generate Pattern</button>
+        </div>
+        <canvas id="patternCanvas" width="800" height="600"></canvas>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
