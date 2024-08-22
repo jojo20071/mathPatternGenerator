@@ -82,6 +82,92 @@
         </div>
         <canvas id="patternCanvas" width="800" height="600"></canvas>
     </div>
-    <script src="script.js"></script>
+    <script>
+        const canvas = document.getElementById('patternCanvas');
+        const ctx = canvas.getContext('2d');
+        const generateBtn = document.getElementById('generateBtn');
+        const patternTypeSelect = document.getElementById('patternType');
+        const colorSchemeSelect = document.getElementById('colorScheme');
+        const densityInput = document.getElementById('density');
+
+        function generatePattern() {
+            const patternType = patternTypeSelect.value;
+            const colorScheme = colorSchemeSelect.value;
+            const density = parseInt(densityInput.value);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            switch (patternType) {
+                case 'dots':
+                    generateDots(colorScheme, density);
+                    break;
+                case 'lines':
+                    generateLines(colorScheme, density);
+                    break;
+                case 'circles':
+                    generateCircles(colorScheme, density);
+                    break;
+            }
+        }
+
+        function generateDots(colorScheme, density) {
+            const numDots = density * 10;
+            for (let i = 0; i < numDots; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const color = getColor(colorScheme);
+                ctx.beginPath();
+                ctx.arc(x, y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+        }
+
+        function generateLines(colorScheme, density) {
+            const numLines = density * 2;
+            for (let i = 0; i < numLines; i++) {
+                const startX = Math.random() * canvas.width;
+                const startY = Math.random() * canvas.height;
+                const endX = Math.random() * canvas.width;
+                const endY = Math.random() * canvas.height;
+                const color = getColor(colorScheme);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            }
+        }
+
+        function generateCircles(colorScheme, density) {
+            const numCircles = density;
+            for (let i = 0; i < numCircles; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = Math.random() * 50 + 10;
+                const color = getColor(colorScheme);
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            }
+        }
+
+        function getColor(colorScheme) {
+            switch (colorScheme) {
+                case 'random':
+                    return `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`;
+                case 'monochrome':
+                    const shade = Math.random() * 255;
+                    return `rgb(${shade},${shade},${shade})`;
+                case 'complementary':
+                    const hue = Math.random() * 360;
+                    return `hsl(${hue},100%,50%)`;
+            }
+        }
+
+        generateBtn.addEventListener('click', generatePattern);
+        generatePattern();
+    </script>
 </body>
 </html>
