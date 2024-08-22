@@ -106,14 +106,55 @@
                 canvas.height = canvasHeight;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Existing pattern generation logic...
+               
             }
 
             function saveCanvasAsImage() {
                 const link = document.createElement('a');
                 link.download = 'pattern.png';
                 link.href = canvas.toDataURL();
-                link.click();
+                link.click();               
+                
+                    function generateLines(colorScheme, density) {
+                        for (let i = 0; i < density * 10; i++) {
+                            const x1 = Math.random() * canvas.width;
+                            const y1 = Math.random() * canvas.height;
+                            const x2 = Math.random() * canvas.width;
+                            const y2 = Math.random() * canvas.height;
+                            ctx.beginPath();
+                            ctx.moveTo(x1, y1);
+                            ctx.lineTo(x2, y2);
+                            ctx.strokeStyle = getColor(colorScheme);
+                            ctx.stroke();
+                        }
+                    }
+                
+                    function generatePattern() {
+                        const patternType = patternTypeSelect.value;
+                        const colorScheme = colorSchemeSelect.value;
+                        const density = parseInt(densityInput.value);
+                        const canvasWidth = parseInt(canvasWidthInput.value);
+                        const canvasHeight = parseInt(canvasHeightInput.value);
+                
+                        canvas.width = canvasWidth;
+                        canvas.height = canvasHeight;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                        switch (patternType) {
+                            case 'dots':
+                                generateDots(colorScheme, density);
+                                break;
+                            case 'lines':
+                                generateLines(colorScheme, density);
+                                break;
+                            
+                        }
+                    }
+                
+                    generateBtn.addEventListener('click', generatePattern);
+                    saveBtn.addEventListener('click', saveCanvasAsImage);
+                    generatePattern();
+                </script>
             }
 
             saveBtn.addEventListener('click', saveCanvasAsImage);
