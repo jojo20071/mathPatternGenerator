@@ -116,6 +116,46 @@
             const canvasWidthInput = document.getElementById('canvasWidth');
             const canvasHeightInput = document.getElementById('canvasHeight');
             const saveBtn = document.getElementById('saveBtn');
+            const customColorInput = document.getElementById('customColor');
+            const animatePatternCheckbox = document.getElementById('animatePattern');
+
+    function getColor(colorScheme) {
+        switch (colorScheme) {
+         case 'random':
+            return `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`;
+        case 'monochrome':
+            const shade = Math.random() * 255;
+            return `rgb(${shade},${shade},${shade})`;
+        case 'complementary':
+            const hue = Math.random() * 360;
+            return `hsl(${hue},100%,50%)`;
+        case 'triadic':
+            const baseHue = Math.random() * 360;
+            const triadicHues = [baseHue, (baseHue + 120) % 360, (baseHue + 240) % 360];
+            const selectedHue = triadicHues[Math.floor(Math.random() * 3)];
+            return `hsl(${selectedHue},100%,50%)`;
+        case 'custom':
+            return customColorInput.value;
+    }
+}
+
+            let animationId;
+
+            function animate() {
+             generatePattern();
+                animationId = requestAnimationFrame(animate);
+            }
+
+            generateBtn.addEventListener('click', () => {
+             if (animatePatternCheckbox.checked) {
+                  if (animationId) cancelAnimationFrame(animationId);
+                  animate();
+             } else {
+                  if (animationId) cancelAnimationFrame(animationId);
+                  generatePattern();
+                }
+            });
+
 
             function generatePattern() {
                 const canvasWidth = parseInt(canvasWidthInput.value);
